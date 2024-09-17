@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  phone     String
+  password  String
+  email     String? // nullable field
+  firstName String? // nullable field
+  lastName  String? // nullable field
+  role      String   @default("user")
+  gender    Int      @default(1) // tinyint in DBML can be represented as Int in Prisma
+  createdAt DateTime @default(now())
+
+  // Add this line for the relationship
+  taskCategories TaskCategory[] // One-to-many relationship with TaskCategory
+}
+
+model TaskCategory {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String? // nullable field
+  icon        String? // nullable field
+  userId      Int
+  createdAt   DateTime @default(now())
+
+  user User   @relation(fields: [userId], references: [id]) // Foreign key reference
+  Task Task[]
+}
+
+model Task {
+  id              Int       @id @default(autoincrement())
+  title           String
+  description     String? // nullable field
+  isDone          Boolean   @default(false)
+  taskCategoryId  Int
+  repetitionType  Int       @default(0)
+  repetitionItems Int       @default(1)
+  includeVacation Boolean
+  startedAt       DateTime? // nullable field
+  endedAt         DateTime? // nullable field
+  createdAt       DateTime  @default(now())
+
+  // Relation to TaskCategory
+  taskCategory TaskCategory @relation(fields: [taskCategoryId], references: [id])
+}
