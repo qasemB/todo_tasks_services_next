@@ -13,6 +13,15 @@ const swaggerDefinition = {
       url: 'http://localhost:3000',
     },
   ],
+  components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
+  },
 };
 
 const options = {

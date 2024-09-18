@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: Next.js API with Swagger
+  version: 1.0.0
+  description: API documentation for a Next.js project
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /api/auth/login:
+    post:
+      summary: User login
+      description: Authenticate a user using phone and password.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                phone:
+                  type: string
+                  example: "+1234567890"
+                password:
+                  type: string
+                  example: "yourpassword"
+      responses:
+        '200':
+          description: Successful login, returns JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid credentials"
+        '500':
+          description: Error during login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Error logging in"
+  /api/auth/register:
+      post:
+        summary: User registration
+        description: Register a new user.
+        tags:
+          - Authentication
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  phone:
+                    type: string
+                    example: "+1234567890"
+                  password:
+                    type: string
+                    example: "yourpassword"
+                  email:
+                    type: string
+                    example: "user@example.com"
+                  firstName:
+                    type: string
+                    example: "John"
+                  lastName:
+                    type: string
+                    example: "Doe"
+        responses:
+          '201':
+            description: Successful registration
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        phone:
+                          type: string
+                          example: "+1234567890"
+                        email:
+                          type: string
+                          example: "user@example.com"
+                        firstName:
+                          type: string
+                          example: "John"
+                        lastName:
+                          type: string
+                          example: "Doe"
+                    message:
+                      type: string
+                      example: "User registered successfully"
+          '500':
+            description: Error during registration
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    error:
+                      type: string
+                      example: "Error registering user"

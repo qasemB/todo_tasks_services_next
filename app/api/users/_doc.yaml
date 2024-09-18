@@ -75,6 +75,8 @@ components:
 paths:
   /api/users:
     post:
+      security:
+        - bearerAuth: []
       tags:
         - Users
       summary: Create a new user
@@ -138,6 +140,8 @@ paths:
                     description: Error message
                     example: "Error creating user"
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Users
       summary: Retrieve a list of users
@@ -198,6 +202,8 @@ paths:
                     example: "Error fetching users"
   /api/users/{id}:
     get:
+      security:
+        - bearerAuth: []
       tags:
         - Users
       summary: Retrieve a user by ID
@@ -289,6 +295,8 @@ paths:
                     description: Error message.
                     example: "Error fetching user"
     put:
+      security:
+        - bearerAuth: []
       summary: Update a user by ID
       tags:
         - Users
@@ -315,6 +323,8 @@ paths:
         "500":
           description: Error updating user.
     patch:
+      security:
+        - bearerAuth: []
       summary: Update a user by ID
       tags:
         - Users
@@ -341,6 +351,8 @@ paths:
         "500":
           description: Error updating user.
     delete:
+      security:
+        - bearerAuth: []
       summary: Delete a user by ID
       tags:
         - Users

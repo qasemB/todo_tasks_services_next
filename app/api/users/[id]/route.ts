@@ -1,9 +1,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../lib/prisma';
+import { verifyToken } from '@/lib/auth';
 
 type ParamsType = { params: { id: string; } }
 
 export async function GET(request: Request, { params }: ParamsType) {
+  const verified = verifyToken(request)
+  if (!verified) return new NextResponse('Unauthorized', { status: 401 });
+
   const id = params.id;
 
   if (!id) {
@@ -25,6 +29,9 @@ export async function GET(request: Request, { params }: ParamsType) {
 }
 
 export async function PUT(request: Request, { params }: ParamsType) {
+  const verified = verifyToken(request)
+  if (!verified) return new NextResponse('Unauthorized', { status: 401 });
+
   const id = params.id
   const { phone, password, email, firstName, lastName, role, gender } = await request.json();
 
@@ -44,6 +51,9 @@ export async function PUT(request: Request, { params }: ParamsType) {
 }
 
 export async function PATCH(request: Request, { params }: ParamsType) {
+  const verified = verifyToken(request)
+  if (!verified) return new NextResponse('Unauthorized', { status: 401 });
+
   const id = params.id
   const data = await request.json();
 
@@ -58,7 +68,7 @@ export async function PATCH(request: Request, { params }: ParamsType) {
     });
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    if (typeof error === "object" && error &&  "code" in error && error?.code  === "P2025") {
+    if (typeof error === "object" && error && "code" in error && error?.code === "P2025") {
       return NextResponse.json({ error: "کاربر یافت نشد" }, { status: 500 });
     }
     return NextResponse.json({ error }, { status: 500 });
@@ -66,6 +76,9 @@ export async function PATCH(request: Request, { params }: ParamsType) {
 }
 
 export async function DELETE(request: Request, { params }: ParamsType) {
+  const verified = verifyToken(request)
+  if (!verified) return new NextResponse('Unauthorized', { status: 401 });
+
   const id = params.id
 
   if (!id) {
