@@ -1,21 +1,29 @@
-import { NextResponse } from 'next/server';
 import prisma from '../../../../lib/prisma';
 import { generateToken, verifyPassword } from '@/lib/auth';
+import { ResponseClass } from '@/utils/response';
+import { loginValidationSchema } from '../_schema';
+import { validateParamsErrors } from '@/utils/validation';
+import { LoginUserDto } from '../_types';
+
+
 export async function POST(request: Request) {
-  const { phone, password } = await request.json();
+  const data: LoginUserDto = await request.json();
+
+  const validationErrors = validateParamsErrors(loginValidationSchema, data)
+  if (validationErrors) return validationErrors;
 
   try {
+    const { phone, password } = data
     const user = await prisma.user.findFirst({
       where: { phone },
     });
-
     if (!user || !(await verifyPassword(password, user.password))) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return new ResponseClass(null, false, 'Invalid credentials').unAuth();
     }
-
     const token = generateToken(user.id);
-    return NextResponse.json({ token }, { status: 200 });
+    return new ResponseClass(token, true).success();
+
   } catch (error) {
-    return NextResponse.json({ error: 'Error logging in' }, { status: 500 });
+    return new ResponseClass(null, false, 'Error logging in').custom(500);
   }
 }

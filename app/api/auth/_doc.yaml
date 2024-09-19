@@ -75,15 +75,6 @@ paths:
                   password:
                     type: string
                     example: "yourpassword"
-                  email:
-                    type: string
-                    example: "user@example.com"
-                  firstName:
-                    type: string
-                    example: "John"
-                  lastName:
-                    type: string
-                    example: "Doe"
         responses:
           '201':
             description: Successful registration
