@@ -1,0 +1,143 @@
+openapi: 3.0.0
+info:
+  title: Next.js API with Swagger
+  version: 1.0.0
+  description: API documentation for a Next.js project
+servers:
+  - url: "http://localhost:3000"
+components:
+  schemas:
+    CreateTaskCategory:
+      type: object
+      required:
+        - phone
+        - password
+      properties:
+        title:
+          type: string
+        icon:
+          type: string
+        description:
+          type: string
+    UpdateTaskCategory:
+      type: object
+      properties:
+        title:
+          type: string
+        icon:
+          type: string
+        description:
+          type: string
+paths:
+  /api/client/task-categories:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - TaskCategories
+      summary: Create a new task category
+      description: This endpoint creates a new task category with the provided details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskCategory"
+      responses:
+        "201":
+          description: Task category created successfully
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - TaskCategories
+      summary: Retrieve a list of task categories
+      description: This endpoint retrieves a list of all task categories.
+      responses:
+        "200":
+          description: A list of task categories
+  /api/client/task-categories/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - TaskCategories
+      summary: Retrieve a task category by ID
+      description: Fetch a task category from the database using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the task category to retrieve.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: The task category information.
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update a task category by ID
+      tags:
+        - TaskCategories
+      description: Update a task category's information using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskCategory"
+      responses:
+        "200":
+          description: Task category updated successfully.
+    patch:
+      security:
+        - bearerAuth: []
+      summary: Update a task category by ID
+      tags:
+        - TaskCategories
+      description: Update a task category's information using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskCategory"
+      responses:
+        "200":
+          description: Task category updated successfully.
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete a task category by ID
+      tags:
+        - TaskCategories
+      description: Delete a task category from the database using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to delete.
+      responses:
+        "200":
+          description: User deleted successfully.

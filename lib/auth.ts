@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
 export const generateToken = (userId: number) => {
-    return jwt.sign({ id: userId }, SECRET_KEY, { expiresIn: '1h' });
+    return jwt.sign({ id: userId }, SECRET_KEY, { expiresIn: '24h' });
 };
 
 export const hashPassword = async (password: string) => {
@@ -28,6 +28,18 @@ export function verifyToken(req: Request) {
         return true
     } catch (error) {
         return false
+    }
+}
+
+export function getDecodedToken(req: Request): { id: number } | null {
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader || !authHeader.startsWith('Bearer ')) return null
+    const token = authHeader.split(' ')[1];
+    try {
+        return jwt.verify(token, SECRET_KEY) as { id: number };
+    } catch (error) {
+        console.error('Invalid token', error);
+        return null;
     }
 }
 

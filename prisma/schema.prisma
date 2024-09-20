@@ -36,7 +36,7 @@ model TaskCategory {
   userId      Int
   createdAt   DateTime @default(now())
 
-  user User   @relation(fields: [userId], references: [id]) // Foreign key reference
+  user User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Foreign key reference
   Task Task[]
 }
 
@@ -54,5 +54,5 @@ model Task {
   createdAt       DateTime  @default(now())
 
   // Relation to TaskCategory
-  taskCategory TaskCategory @relation(fields: [taskCategoryId], references: [id])
+  taskCategory TaskCategory @relation(fields: [taskCategoryId], references: [id], onDelete: Cascade)
 }

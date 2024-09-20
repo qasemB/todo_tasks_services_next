@@ -73,7 +73,7 @@ components:
           description: The gender of the user.
           example: 1
 paths:
-  /api/users:
+  /api/admin/users:
     post:
       security:
         - bearerAuth: []
@@ -200,7 +200,7 @@ paths:
                     type: string
                     description: Error message
                     example: "Error fetching users"
-  /api/users/{id}:
+  /api/admin/users/{id}:
     get:
       security:
         - bearerAuth: []

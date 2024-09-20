@@ -3,11 +3,11 @@ import { NextResponse } from "next/server"
 export class ResponseClass {
     public body: { data: unknown, message?: string, success: boolean }
 
-    constructor(data: unknown, success: boolean, message?: string) {
+    constructor(data?: unknown, success?: boolean, message?: string) {
         this.body = {
-            data,
+            data: data || null,
             message: message || "",
-            success
+            success: success || false
         }
     }
 
