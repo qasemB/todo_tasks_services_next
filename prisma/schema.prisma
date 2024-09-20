@@ -48,7 +48,7 @@ model Task {
   taskCategoryId  Int
   repetitionType  Int       @default(0)
   repetitionItems Int       @default(1)
-  includeVacation Boolean
+  includeVacation Boolean   @default(true)
   startedAt       DateTime? // nullable field
   endedAt         DateTime? // nullable field
   createdAt       DateTime  @default(now())

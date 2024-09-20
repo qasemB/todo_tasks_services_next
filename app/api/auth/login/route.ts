@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     if (!user || !(await verifyPassword(password, user.password))) {
       return new ResponseClass(null, false, 'Invalid credentials').unAuth();
     }
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.role);
     return new ResponseClass(token, true).success();
 
   } catch (error) {

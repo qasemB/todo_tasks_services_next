@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { CreateTaskCategoryParamsType } from "./_types";
 import prisma from '@/lib/prisma';
 import { ResponseClass } from "@/utils/response";
+import { validateParamsErrors } from "@/utils/validation";
+import { createTaskCategoryValidationSchema } from "./_schema";
 
 export async function POST(request: Request) {
     const verified = verifyToken(request)
@@ -12,6 +14,10 @@ export async function POST(request: Request) {
     if (!decodecToken?.id) return new ResponseClass(null, false).unAuth()
 
     const data: CreateTaskCategoryParamsType = await request.json();
+
+    const validationErrors = validateParamsErrors(createTaskCategoryValidationSchema, data)
+    if (validationErrors) return validationErrors;
+
     try {
         const taskCategory = await prisma.taskCategory.create({
             data: {

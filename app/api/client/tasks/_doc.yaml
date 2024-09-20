@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Next.js API with Swagger
+  version: 1.0.0
+  description: API documentation for a Next.js project
+servers:
+  - url: "http://localhost:3000"
+components:
+  schemas:
+    CreateTaskDto:
+      type: object
+      required:
+        - title
+        - taskCategoryId
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        isDone:
+          type: boolean
+        taskCategoryId:
+          type: integer
+        repetitionType:
+          type: integer
+        repetitionItems:
+          type: integer
+        includeVacation:
+          type: boolean
+        startedAt:
+          type: string
+        endedAt:
+          type: string
+    UpdateTaskDto:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        isDone:
+          type: boolean
+        taskCategoryId:
+          type: integer
+        repetitionType:
+          type: integer
+        repetitionItems:
+          type: integer
+        includeVacation:
+          type: boolean
+        startedAt:
+          type: string
+        endedAt:
+          type: string
+paths:
+  /api/client/tasks:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Client/Tasks
+      summary: Create a new task
+      description: This endpoint creates a new task with the provided details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskDto"
+      responses:
+        "201":
+          description: Task created successfully
+  /api/client/tasks/by-category/{task_category_id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Client/Tasks
+      summary: Retrieve a list of tasks
+      description: This endpoint retrieves a list of all tasks.
+      parameters:
+        - in: path
+          name: task_category_id
+          required: true
+          description: The ID of the task to retrieve.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: A list of tasks
+  /api/client/tasks/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Client/Tasks
+      summary: Retrieve a task by ID
+      description: Fetch a task from the database using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the task to retrieve.
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: The task information.
+    put:
+      security:
+        - bearerAuth: []
+      summary: Update a task by ID
+      tags:
+        - Client/Tasks
+      description: Update a task's information using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTaskDto"
+      responses:
+        "200":
+          description: Task updated successfully.
+    patch:
+      security:
+        - bearerAuth: []
+      summary: Update a task by ID
+      tags:
+        - Client/Tasks
+      description: Update a task's information using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to update.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTaskDto"
+      responses:
+        "200":
+          description: Task updated successfully.
+    delete:
+      security:
+        - bearerAuth: []
+      summary: Delete a task by ID
+      tags:
+        - Client/Tasks
+      description: Delete a task from the database using their ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            example: 1
+          description: The ID of the user to delete.
+      responses:
+        "200":
+          description: User deleted successfully.

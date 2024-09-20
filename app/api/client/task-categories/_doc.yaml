@@ -7,7 +7,7 @@ servers:
   - url: "http://localhost:3000"
 components:
   schemas:
-    CreateTaskCategory:
+    CreateTaskCategoryDto:
       type: object
       required:
         - phone
@@ -19,7 +19,7 @@ components:
           type: string
         description:
           type: string
-    UpdateTaskCategory:
+    UpdateTaskCategoryDto:
       type: object
       properties:
         title:
@@ -30,11 +30,21 @@ components:
           type: string
 paths:
   /api/client/task-categories:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Client/TaskCategories
+      summary: Retrieve a list of task categories
+      description: This endpoint retrieves a list of all task categories.
+      responses:
+        "200":
+          description: A list of task categories
     post:
       security:
         - bearerAuth: []
       tags:
-        - TaskCategories
+        - Client/TaskCategories
       summary: Create a new task category
       description: This endpoint creates a new task category with the provided details.
       requestBody:
@@ -42,26 +52,27 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTaskCategory"
+              $ref: "#/components/schemas/CreateTaskCategoryDto"
       responses:
         "201":
           description: Task category created successfully
+  /api/client/task-categories/include-tasks:
     get:
       security:
         - bearerAuth: []
       tags:
-        - TaskCategories
-      summary: Retrieve a list of task categories
-      description: This endpoint retrieves a list of all task categories.
+        - Client/TaskCategories
+      summary: Retrieve a list of task categories include its tasks
+      description: This endpoint retrieves a list of all task categories of current user include its tasks.
       responses:
         "200":
-          description: A list of task categories
+          description: A list of task categories include its tasks
   /api/client/task-categories/{id}:
     get:
       security:
         - bearerAuth: []
       tags:
-        - TaskCategories
+        - Client/TaskCategories
       summary: Retrieve a task category by ID
       description: Fetch a task category from the database using their ID.
       parameters:
@@ -80,7 +91,7 @@ paths:
         - bearerAuth: []
       summary: Update a task category by ID
       tags:
-        - TaskCategories
+        - Client/TaskCategories
       description: Update a task category's information using their ID.
       parameters:
         - in: path
@@ -95,7 +106,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateTaskCategory"
+              $ref: "#/components/schemas/CreateTaskCategoryDto"
       responses:
         "200":
           description: Task category updated successfully.
@@ -104,7 +115,7 @@ paths:
         - bearerAuth: []
       summary: Update a task category by ID
       tags:
-        - TaskCategories
+        - Client/TaskCategories
       description: Update a task category's information using their ID.
       parameters:
         - in: path
@@ -119,7 +130,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateTaskCategory"
+              $ref: "#/components/schemas/UpdateTaskCategoryDto"
       responses:
         "200":
           description: Task category updated successfully.
@@ -128,7 +139,7 @@ paths:
         - bearerAuth: []
       summary: Delete a task category by ID
       tags:
-        - TaskCategories
+        - Client/TaskCategories
       description: Delete a task category from the database using their ID.
       parameters:
         - in: path

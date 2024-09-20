@@ -3,8 +3,8 @@ import bcrypt from 'bcryptjs';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
-export const generateToken = (userId: number) => {
-    return jwt.sign({ id: userId }, SECRET_KEY, { expiresIn: '24h' });
+export const generateToken = (userId: number, role: string) => {
+    return jwt.sign({ id: userId, role }, SECRET_KEY, { expiresIn: '24h' });
 };
 
 export const hashPassword = async (password: string) => {
@@ -31,12 +31,12 @@ export function verifyToken(req: Request) {
     }
 }
 
-export function getDecodedToken(req: Request): { id: number } | null {
+export function getDecodedToken(req: Request): { id: number, role: string } | null {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader || !authHeader.startsWith('Bearer ')) return null
     const token = authHeader.split(' ')[1];
     try {
-        return jwt.verify(token, SECRET_KEY) as { id: number };
+        return jwt.verify(token, SECRET_KEY) as { id: number, role: string };
     } catch (error) {
         console.error('Invalid token', error);
         return null;

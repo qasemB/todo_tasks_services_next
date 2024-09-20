@@ -7,7 +7,7 @@ servers:
   - url: "http://localhost:3000"
 components:
   schemas:
-    CreateUser:
+    CreateUserDto:
       type: object
       required:
         - phone
@@ -41,7 +41,7 @@ components:
           type: integer
           description: The gender of the user.
           example: 1
-    UpdateUser:
+    UpdateUserDto:
       type: object
       properties:
         phone:
@@ -74,11 +74,21 @@ components:
           example: 1
 paths:
   /api/admin/users:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Admin/Users
+      summary: Retrieve a list of users
+      description: This endpoint retrieves a list of all users.
+      responses:
+        "200":
+          description: A list of users
     post:
       security:
         - bearerAuth: []
       tags:
-        - Users
+        - Admin/Users
       summary: Create a new user
       description: This endpoint creates a new user with the provided details.
       requestBody:
@@ -86,126 +96,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateUser"
+              $ref: "#/components/schemas/CreateUserDto"
       responses:
         "201":
           description: User created successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: The ID of the created user.
-                    example: 1
-                  phone:
-                    type: string
-                    description: The phone number of the user.
-                    example: "+1234567890"
-                  email:
-                    type: string
-                    description: The email address of the user.
-                    example: "user@example.com"
-                  firstName:
-                    type: string
-                    description: The first name of the user.
-                    example: "John"
-                  lastName:
-                    type: string
-                    description: The last name of the user.
-                    example: "Doe"
-                  role:
-                    type: string
-                    description: The role assigned to the user.
-                    example: "user"
-                  gender:
-                    type: integer
-                    description: The gender of the user represented as an integer.
-                    example: 1
-                  createdAt:
-                    type: string
-                    format: date-time
-                    description: The date and time when the user was created.
-                    example: "2024-09-17T08:00:00.000Z"
-        "500":
-          description: Error creating user
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
-                    example: "Error creating user"
-    get:
-      security:
-        - bearerAuth: []
-      tags:
-        - Users
-      summary: Retrieve a list of users
-      description: This endpoint retrieves a list of all users.
-      responses:
-        "200":
-          description: A list of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: The ID of the user.
-                      example: 1
-                    phone:
-                      type: string
-                      description: The phone number of the user.
-                      example: "+1234567890"
-                    email:
-                      type: string
-                      description: The email address of the user.
-                      example: "user@example.com"
-                    firstName:
-                      type: string
-                      description: The first name of the user.
-                      example: "John"
-                    lastName:
-                      type: string
-                      description: The last name of the user.
-                      example: "Doe"
-                    role:
-                      type: string
-                      description: The role assigned to the user.
-                      example: "user"
-                    gender:
-                      type: integer
-                      description: The gender of the user represented as an integer.
-                      example: 1
-                    createdAt:
-                      type: string
-                      format: date-time
-                      description: The date and time when the user was created.
-                      example: "2024-09-17T08:00:00.000Z"
-        "500":
-          description: Error fetching users
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message
-                    example: "Error fetching users"
   /api/admin/users/{id}:
     get:
       security:
         - bearerAuth: []
       tags:
-        - Users
+        - Admin/Users
       summary: Retrieve a user by ID
       description: Fetch a user from the database using their ID.
       parameters:
@@ -219,87 +119,12 @@ paths:
       responses:
         "200":
           description: The user information.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                    description: The ID of the user.
-                    example: 1
-                  phone:
-                    type: string
-                    description: The phone number of the user.
-                    example: "1234567890"
-                  password:
-                    type: string
-                    description: The password of the user.
-                    example: "hashedpassword"
-                  email:
-                    type: string
-                    description: The email of the user.
-                    example: "john.doe@example.com"
-                  firstName:
-                    type: string
-                    description: The first name of the user.
-                    example: "John"
-                  lastName:
-                    type: string
-                    description: The last name of the user.
-                    example: "Doe"
-                  role:
-                    type: string
-                    description: The role of the user.
-                    example: "admin"
-                  gender:
-                    type: integer
-                    description: The gender of the user.
-                    example: 1
-                  createdAt:
-                    type: string
-                    format: date-time
-                    description: The creation date of the user.
-                    example: "2024-09-17T12:34:56Z"
-        "400":
-          description: ID is required.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message.
-                    example: "ID is required"
-        "404":
-          description: User not found.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message.
-                    example: "User not found"
-        "500":
-          description: Error fetching user.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    description: Error message.
-                    example: "Error fetching user"
     put:
       security:
         - bearerAuth: []
       summary: Update a user by ID
       tags:
-        - Users
+        - Admin/Users
       description: Update a user's information using their ID.
       parameters:
         - in: path
@@ -314,20 +139,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateUser"
+              $ref: "#/components/schemas/CreateUserDto"
       responses:
         "200":
           description: User updated successfully.
-        "400":
-          description: ID is required.
-        "500":
-          description: Error updating user.
     patch:
       security:
         - bearerAuth: []
       summary: Update a user by ID
       tags:
-        - Users
+        - Admin/Users
       description: Update a user's information using their ID.
       parameters:
         - in: path
@@ -342,20 +163,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateUser"
+              $ref: "#/components/schemas/UpdateUserDto"
       responses:
         "200":
           description: User updated successfully.
-        "400":
-          description: ID is required.
-        "500":
-          description: Error updating user.
     delete:
       security:
         - bearerAuth: []
       summary: Delete a user by ID
       tags:
-        - Users
+        - Admin/Users
       description: Delete a user from the database using their ID.
       parameters:
         - in: path
@@ -366,9 +183,5 @@ paths:
             example: 1
           description: The ID of the user to delete.
       responses:
-        "204":
+        "200":
           description: User deleted successfully.
-        "400":
-          description: ID is required.
-        "500":
-          description: Error deleting user.
