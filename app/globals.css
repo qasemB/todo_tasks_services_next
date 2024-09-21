@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "IRSans";
+    src: url("../assets/fonts/IranSansX/IRANSansXFaNum-Regular.woff2") format("woff");
+}
+
+* {
+    font-family: "IRSans", serif;
+    font-size: 0.95rem;
+}

@@ -15,11 +15,17 @@ export const verifyPassword = async (password: string, hashedPassword: string) =
     return bcrypt.compare(password, hashedPassword);
 };
 
-export function verifyToken(req: Request) {
-    const authHeader = req.headers.get('authorization');
-    if (!authHeader) return false
+export function verifyToken(req?: Request , currentToken?: string) {
+    let token = ""
 
-    const token = authHeader.split(' ')[1]; // Assuming the format is "Bearer <token>"
+    if (req) {
+        const authHeader = req.headers.get('authorization');
+        if (!authHeader) return false    
+        token = authHeader.split(' ')[1]; // Assuming the format is "Bearer <token>"
+    }else if (currentToken){
+        token = currentToken
+    }
+
     if (!token) return false
 
     try {

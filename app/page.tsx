@@ -4,6 +4,9 @@ export default function Home() {
   return (
     <div className="w-full text-center block py-6">
       <Link className="text-blue-700" href={"/swagger"}>مستندات</Link>
+      <div>
+        <Link className="text-blue-700" href={"/auth/login"}>ورود</Link>
+      </div>
     </div>
   );
 }
