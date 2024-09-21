@@ -12,6 +12,12 @@ const swaggerDefinition = {
     {
       url: 'http://localhost:3000',
     },
+    {
+      url: "https://todotasks-m9clj2wdb-qasembs-projects.vercel.app",
+    },
+    {
+      url: "todotasks.chbk.run",
+    },
   ],
   components: {
     securitySchemes: {
