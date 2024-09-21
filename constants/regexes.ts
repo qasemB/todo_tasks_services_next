@@ -1,6 +1,6 @@
 export const regexes_patterns = {
     // ALL_ALPHABET : /^[\p{L}\p{N}\p{Pc}\p{M}\p{Zs}!@#.,;\/:\-،%؟?^$]*$/u,
-    ALL_ALPHABET : /^[a-zA-Z0-9\s@.#!"$%^&*()+=\-[\]{}|\\:/?.,_\u0600-\u06FF\u200C]*$/u,
+    ALL_ALPHABET : /^[a-zA-Z0-9\s@.#!"$%^&*()+=\-[\]{}|\\:/?.,_\u0600-\u06FF\u200C]*$/,
     // ENGLISH_ALPHABET_NUM_CHARACTER :  /^[\p{N}\p{Pc}\p{M}\p{Zs}!@#.,;\/:\-،%؟?^$]*$/u,
     // ENGLISH_ALPHABET_NUM_CHARACTER :  /^[a-zA-Z0-9\s\p{L}]+$/u,
     ENGLISH_ALPHABET_NUM_CHARACTER :   /^[a-zA-Z0-9\s@.#!"$%^&*()+=\-[\]{}|\\:/?.,_\u200C]+$/,
