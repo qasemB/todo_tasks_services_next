@@ -9,7 +9,7 @@ export type CreateUserParamsType = {
 }
 
 export type UserParamsType = Omit<CreateUserParamsType, "password"> & {
-    id: number,
+    id: string,
     createdAt: any
     password?: string
 }

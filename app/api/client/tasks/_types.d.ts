@@ -2,7 +2,7 @@ export type CreateTaskParamsType = {
     title: string
     description?: string
     isDone?: boolean
-    taskCategoryId: number
+    taskCategoryId: string
     repetitionType?: number
     repetitionItems?: number
     includeVacation?: boolean

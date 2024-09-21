@@ -16,7 +16,7 @@ export async function GET(request: Request, { params }: ParamsType) {
   if (!id) return new ResponseClass(null, false, 'ID is required').bad()
 
   try {
-    const task = await prisma.task.findUnique({ where: { id: Number(id) } });
+    const task = await prisma.task.findUnique({ where: { id } });
     if (task) return new ResponseClass(task, true,).success();
     else return new ResponseClass(null, false, 'task not found').bad()
   } catch (error) {
@@ -38,7 +38,7 @@ export async function PUT(request: Request, { params }: ParamsType) {
 
   try {
     const task = await prisma.task.update({
-      where: { id: Number(id) },
+      where: { id },
       data: data,
     });
     return new ResponseClass(task, true,).success();
@@ -61,7 +61,7 @@ export async function PATCH(request: Request, { params }: ParamsType) {
 
   try {
     const task = await prisma.task.update({
-      where: { id: Number(id) },
+      where: { id },
       data,
     });
     return new ResponseClass(task, true).success()
@@ -80,7 +80,7 @@ export async function DELETE(request: Request, { params }: ParamsType) {
 
 
   try {
-    await prisma.task.delete({ where: { id: Number(id) } });
+    await prisma.task.delete({ where: { id } });
     return new ResponseClass(null, true).success()
   } catch (error) {
     return new ResponseClass().serverError();

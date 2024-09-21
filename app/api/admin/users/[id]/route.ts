@@ -20,7 +20,7 @@ export async function GET(request: Request, { params }: ParamsType) {
 
   try {
     const user = await prisma.user.findUnique({
-      where: { id: Number(id) },
+      where: { id },
     });
     if (user) {
       return NextResponse.json(user, { status: 200 });
@@ -48,7 +48,7 @@ export async function PUT(request: Request, { params }: ParamsType) {
 
   try {
     const user = await prisma.user.update({
-      where: { id: Number(id) },
+      where: { id },
       data: { phone, password, email, firstName, lastName, role, gender },
     });
     return NextResponse.json(user, { status: 200 });
@@ -73,7 +73,7 @@ export async function PATCH(request: Request, { params }: ParamsType) {
 
   try {
     const user = await prisma.user.update({
-      where: { id: Number(id) },
+      where: { id },
       data,
     });
     return NextResponse.json(user, { status: 200 });
@@ -100,7 +100,7 @@ export async function DELETE(request: Request, { params }: ParamsType) {
 
   try {
     await prisma.user.delete({
-      where: { id: Number(id) },
+      where: { id },
     });
     return NextResponse.json({}, { status: 200 });
   } catch (error) {

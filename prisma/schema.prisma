@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   phone     String   @unique
   password  String
   email     String? // nullable field
@@ -29,11 +29,11 @@ model User {
 }
 
 model TaskCategory {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(cuid())
   title       String
   description String? // nullable field
   icon        String? // nullable field
-  userId      Int
+  userId      String
   createdAt   DateTime @default(now())
 
   user User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Foreign key reference
@@ -41,11 +41,11 @@ model TaskCategory {
 }
 
 model Task {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(cuid())
   title           String
   description     String? // nullable field
   isDone          Boolean   @default(false)
-  taskCategoryId  Int
+  taskCategoryId  String
   repetitionType  Int       @default(0)
   repetitionItems Int       @default(1)
   includeVacation Boolean   @default(true)

@@ -12,7 +12,7 @@ export async function GET(request: Request, { params }: ParamsType) {
 
     try {
         const tasks = await prisma.task.findMany({
-            where: { taskCategoryId: Number(task_category_id) }
+            where: { taskCategoryId: task_category_id }
         });
         return new ResponseClass(tasks, true).success();
     } catch (error) {

@@ -12,11 +12,11 @@ const mainValidation = {
 }
 export const createTaskValidationSchema = z.object({
     title: new ZodStr().alphabet().schema,
-    taskCategoryId: new ZodNum().schema,
+    taskCategoryId: new ZodStr().schema,
     ...mainValidation
 });
 export const updateTaskValidationSchema = z.object({
     title: new ZodStr().alphabet().schema.optional(),
-    taskCategoryId: new ZodNum().schema.optional(),
+    taskCategoryId: new ZodStr().schema.optional(),
     ...mainValidation
 });

@@ -2,8 +2,8 @@ import prisma from '../../../../lib/prisma';
 import { hashPassword } from '@/lib/auth';
 import { validateParamsErrors } from '@/utils/validation';
 import { registerValidationSchema } from '../_schema';
-import { UserParamsType } from '../../users/_types';
 import { ResponseClass } from '@/utils/response';
+import { UserParamsType } from '../../admin/users/_types';
 
 type RegisterUserDto = { phone: string, password: string }
 
