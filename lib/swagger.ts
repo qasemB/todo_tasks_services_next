@@ -13,7 +13,7 @@ const swaggerDefinition = {
       url: 'http://localhost:3000',
     },
     {
-      url: "https://todotasks-m9clj2wdb-qasembs-projects.vercel.app",
+      url: "https://todotasks-beta.vercel.app/",
     },
     {
       url: "todotasks.chbk.run",
