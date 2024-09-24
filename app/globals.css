@@ -11,3 +11,7 @@
     font-family: "IRSans", serif;
     font-size: 0.95rem;
 }
+
+.swagger_container *{
+    font-family: Arial, Helvetica, sans-serif !important;
+}

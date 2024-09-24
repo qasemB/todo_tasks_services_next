@@ -5,6 +5,8 @@ import 'swagger-ui-react/swagger-ui.css';
 
 export default function SwaggerPage() {
   return (
-    <SwaggerUI url="/swagger/swagger-api" />
+    <div dir='ltr' className='swagger_container'>
+      <SwaggerUI url="/swagger/swagger-api" />
+    </div>
   );
 }

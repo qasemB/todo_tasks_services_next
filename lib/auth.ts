@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { headers } from 'next/headers';
 
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
@@ -37,8 +38,9 @@ export function verifyToken(req?: Request , currentToken?: string) {
     }
 }
 
-export function getDecodedToken(req: Request): { id: string, role: string } | null {
-    const authHeader = req.headers.get('Authorization');
+export function getDecodedToken(req?: Request): { id: string, role: string } | null {
+    const authHeader = req ? req?.headers.get('Authorization'): headers().get('Authorization')
+
     if (!authHeader || !authHeader.startsWith('Bearer ')) return null
     const token = authHeader.split(' ')[1];
     try {

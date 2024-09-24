@@ -114,7 +114,7 @@ paths:
           required: true
           description: The ID of the user to retrieve.
           schema:
-            type: integer
+            type: string
             example: 1
       responses:
         "200":
@@ -131,7 +131,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            type: string
             example: 1
           description: The ID of the user to update.
       requestBody:
@@ -155,7 +155,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            type: string
             example: 1
           description: The ID of the user to update.
       requestBody:
@@ -179,7 +179,7 @@ paths:
           name: id
           required: true
           schema:
-            type: integer
+            type: string
             example: 1
           description: The ID of the user to delete.
       responses:
