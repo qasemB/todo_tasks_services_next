@@ -1,7 +1,7 @@
 'use client'
 import { login } from '@/actions/auth';
 import ServerSubmitButton from '@/components/ServerSubmitButton';
-import { errorToast, successToast } from '@/utils/alerts';
+// import {  successToast } from '@/utils/alerts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -17,10 +17,10 @@ const LoginPage = () => {
 
     useEffect(() => {
         if (state?.success) {
-            successToast(state.message)
+            // successToast(state.message)
             router.push("/client/dashboard")
         }else{
-            errorToast(state?.message)
+            // errorToast(state?.message)
         }
     }, [state, router])
     return (

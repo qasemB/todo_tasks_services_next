@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientToastify from "@/components/ClientToastify";
+// import ClientToastify from "@/components/ClientToastify";
 import ThemeContainer from "@/components/ThemeContainer";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function RootLayout({
         <ThemeContainer>
           <div className="dark:text-gray-100">
             {children}
-            <ClientToastify />
+            {/* <ClientToastify /> */}
           </div>
         </ThemeContainer>
       </body>

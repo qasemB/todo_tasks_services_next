@@ -15,7 +15,7 @@ const DarkmodeBotton = ({ ...rest }: DarkmodeBottonType) => {
 
     useEffect(()=>{
         setTheme(localStorage.getItem(GLOBAL_CONST.theme_name) as ThemeType)
-    },[])
+    },[setTheme])
 
     return (
         <>

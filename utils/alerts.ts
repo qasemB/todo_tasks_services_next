@@ -1,8 +1,8 @@
-import { toast, ToastPosition } from "react-toastify";
+// import { toast, ToastPosition } from "react-toastify";
 import Swal from "sweetalert2";
 
 type AlertIconType = 'warning' | 'error' | 'success' | 'info' | 'question'
-type ToastIconType = 'info' | 'success' | 'warning' | 'error' | 'default'
+// type ToastIconType = 'info' | 'success' | 'warning' | 'error' | 'default'
 
 export const successAlertModal = (text: string = "", title: string = "عملیات موفق", icon: AlertIconType = "info") => {
   return Swal.fire({
@@ -49,20 +49,20 @@ export const confirmAlert = (
 
 //----------------------------------
 
-export const showToast = (text: string, icon: ToastIconType = "info", position?: ToastPosition | undefined, autoClose?: number | false | undefined) => {
-  return toast(text, {
-    closeOnClick: true,
-    position,
-    autoClose,
-    type: icon,
-    rtl: true
-  });
-}
+// export const showToast = (text: string, icon: ToastIconType = "info", position?: ToastPosition | undefined, autoClose?: number | false | undefined) => {
+//   return toast(text, {
+//     closeOnClick: true,
+//     position,
+//     autoClose,
+//     type: icon,
+//     rtl: true
+//   });
+// }
 
-export const errorToast = (text = "عملیات ناموفق", icon: ToastIconType = "error", position: ToastPosition | undefined = "bottom-left", autoClose?: number | false | undefined) => {
-  return showToast(text, icon, position, autoClose)
-};
+// export const errorToast = (text = "عملیات ناموفق", icon: ToastIconType = "error", position: ToastPosition | undefined = "bottom-left", autoClose?: number | false | undefined) => {
+//   return showToast(text, icon, position, autoClose)
+// };
 
-export const successToast = (text = "عملیات موفق", icon: ToastIconType = "success", position: ToastPosition | undefined = "bottom-left", autoClose?: number | false | undefined) => {
-  return showToast(text, icon, position, autoClose)
-};
+// export const successToast = (text = "عملیات موفق", icon: ToastIconType = "success", position: ToastPosition | undefined = "bottom-left", autoClose?: number | false | undefined) => {
+//   return showToast(text, icon, position, autoClose)
+// };

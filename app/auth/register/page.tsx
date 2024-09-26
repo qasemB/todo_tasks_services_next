@@ -1,7 +1,7 @@
 'use client'
 import { signup } from '@/actions/auth';
 import ServerSubmitButton from '@/components/ServerSubmitButton';
-import { successToast } from '@/utils/alerts';
+// import { successToast } from '@/utils/alerts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
@@ -20,7 +20,7 @@ const RegisterPage = () => {
 
     useEffect(() => {
         if (state?.success) {
-            successToast(state.message)
+            // successToast(state.message)
             router.push("/auth/login")
         }
     }, [state, router])
