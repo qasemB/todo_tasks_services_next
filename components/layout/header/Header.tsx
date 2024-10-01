@@ -19,8 +19,8 @@ const Header = () => {
                 <div className="hidden lg:flex items-center bg-white dark:bg-gray-600  w-auto justify-between h-full flex-1 p-5">
                     {/* <NotificationBell />
             <AccountAvatar /> */}
-                    <span>aaa</span>
-                    <span>bbb</span>
+                    <span>خوش آمدید</span>
+                    <span>کاربری</span>
                 </div>
             </div>
         </div>

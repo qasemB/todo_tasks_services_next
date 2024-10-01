@@ -9,7 +9,7 @@ const Sidebar = () => {
         <>
             <div
                 className={`fixed w-full h-screen top-0 transition-all duration-1000 bg-[#00000065]  ${showMenu ? "" : "hidden"}`}
-                onClick={() => setShowMenu(true)}
+                onClick={() => setShowMenu(false)}
             ></div>
 
 

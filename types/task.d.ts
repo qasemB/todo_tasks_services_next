@@ -11,3 +11,5 @@ export type TasksListItemsType = {
     taskCategoryId: string
     title: string
 }
+
+export type CreateTaskReqParamsType = { title: string, taskCategoryId: type }
