@@ -10,6 +10,7 @@ import { TaskCategoryListItemsType } from "@/types/taskCategory";
 import { confirmAlert } from "@/utils/alerts";
 // import { successToast } from "@/utils/alerts";
 import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import { TbCategoryPlus } from "react-icons/tb";
 // import { unstable_cache } from "next/cache";
 
@@ -23,10 +24,19 @@ const TaskListPage = () => {
     const [taskCats, setTaskCats] = useState<TaskCategoryListItemsType[]>([])
     const [loading, setLoading] = useState<boolean>(false)
     const [fetching, setFetching] = useState<boolean>(false)
-    const [createTaskParams, setCreateTaskParams] = useState<CreateTaskReqParamsType>({ title: "", taskCategoryId: "" })
+    // const [createTaskParams, setCreateTaskParams] = useState<CreateTaskReqParamsType>({ title: "", taskCategoryId: "" })
     const [createTasCatTitle, setCreateTaskCatTitle] = useState("")
     const dialogRef = useRef<HTMLDialogElement>(null)
     const createTaskCatDialogRef = useRef<HTMLDialogElement>(null)
+
+    const formReturn = useForm<CreateTaskReqParamsType>({
+        defaultValues:{
+            description:"",
+            repetitionItems:0,
+            repetitionType:0
+        }
+    })
+    const { setValue } = formReturn
 
     const handleLoading = (status: boolean) => {
         if (!taskCats.length) setLoading(status)
@@ -50,12 +60,17 @@ const TaskListPage = () => {
 
     const handleAddTask = (date: string, taskCatId: string) => {
         const d = new Date(date)
-        setCreateTaskParams(old => ({ ...old, startedAt: d, endedAt: d, taskCategoryId: taskCatId }))
+        setValue("startedAt", d)
+        setValue("endedAt", d)
+        setValue("taskCategoryId", taskCatId)
+        // setCreateTaskParams(old => ({ ...old, startedAt: d, endedAt: d, taskCategoryId: taskCatId }))
         dialogRef.current?.showModal()
     }
 
-    const handleConfirmCreateTask = async () => {
-        const res = await httpService("/client/tasks", "post", createTaskParams)
+    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {
+        console.log(values);
+        
+        const res = await httpService("/client/tasks", "post", values)
         if (res.status === 200 || res.status === 201) {
             handleGetTaskCats()
             dialogRef.current?.close()
@@ -126,10 +141,9 @@ const TaskListPage = () => {
 
                         {/* <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button> */}
                         <AddTaskModal
-                            createTaskParams={createTaskParams}
+                            formReturn={formReturn}
                             dialogRef={dialogRef}
                             handleConfirmCreateTask={handleConfirmCreateTask}
-                            setCreateTaskParams={setCreateTaskParams}
                         />
 
                     </div>

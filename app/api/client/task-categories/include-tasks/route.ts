@@ -23,9 +23,22 @@ export async function GET(request: Request) {
             where: { userId: decodecToken.id },
             include: {
                 Task: {
+                    // where: {
+                    //     startedAt: { gte: new Date(datesArr[0]) },
+                    //     endedAt: { lte: new Date(datesArr[datesArr.length - 1]) },
+                    // }
                     where: {
-                        startedAt: { gte: new Date(datesArr[0]) },
-                        endedAt: { lte: new Date(datesArr[datesArr.length - 1]) }
+                        OR: [
+                            {
+                                repetitionItems: 0,
+                                startedAt: { gte: new Date(datesArr[0]) },
+                                endedAt: { lte: new Date(datesArr[datesArr.length - 1]) },
+                            },
+                            {
+                                repetitionItems: { gt: 0 },
+                                endedAt: { gte: new Date(datesArr[0]) },
+                            }
+                        ]
                     }
                 }
             }

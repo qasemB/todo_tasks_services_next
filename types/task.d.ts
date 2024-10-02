@@ -1,3 +1,5 @@
+import { CreateTaskParamsType } from "@/app/api/client/tasks/_types"
+
 export type TasksListItemsType = {
     createdAt: string
     description: string
@@ -12,4 +14,7 @@ export type TasksListItemsType = {
     title: string
 }
 
-export type CreateTaskReqParamsType = { title: string, taskCategoryId: type }
+export type CreateTaskReqParamsType = Omit<CreateTaskParamsType, "startedAt" | "endedAt"> & {
+    startedAt?: Date;
+    endedAt?: Date;
+}
