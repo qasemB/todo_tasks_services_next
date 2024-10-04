@@ -10,7 +10,9 @@ type AddTaskModalType = {
 
 const AddTaskModal = ({ dialogRef, handleConfirmCreateTask, formReturn }: AddTaskModalType) => {
 
-    const { handleSubmit, register } = formReturn
+    const { handleSubmit, register, getValues, watch } = formReturn
+
+    const defdate = watch("startedAt")
 
     return (
         <dialog className="bg-[#000000ab]  w-full lg:w-1/3" ref={dialogRef}>
@@ -29,21 +31,24 @@ const AddTaskModal = ({ dialogRef, handleConfirmCreateTask, formReturn }: AddTas
                     <input {...register("description")} placeholder="حروف و اعداد" className="input input-bordered w-full" />
                 </label>
 
-                <div className='grid grid-cols-2 gap-2'>
-                    <label className="form-control w-full mt-4">
-                        <div className="label">
-                            <span className="label-text">تاریخ شروع</span>
-                        </div>
-                        <input {...register("startedAt", {valueAsDate:true})} type='date' placeholder="عدد" className="input input-bordered w-full" />
-                    </label>
+                {defdate && (
+                    <div className='grid grid-cols-2 gap-2'>
+                        <label className="form-control w-full mt-4">
+                            <div className="label">
+                                <span className="label-text">تاریخ شروع</span>
+                            </div>
+                            <input defaultValue={getValues("startedAt")} {...register("startedAt", { valueAsDate: true })} type='date' placeholder="عدد" className="input input-bordered w-full" />
+                        </label>
 
-                    <label className="form-control w-full mt-4">
-                        <div className="label">
-                            <span className="label-text">تاریخ پایان</span>
-                        </div>
-                        <input {...register("endedAt", {valueAsDate:true})} type='date' placeholder="عدد" className="input input-bordered w-full" />
-                    </label>
-                </div>
+                        <label className="form-control w-full mt-4">
+                            <div className="label">
+                                <span className="label-text">تاریخ پایان</span>
+                            </div>
+                            <input {...register("endedAt", { valueAsDate: true })} type='date' placeholder="عدد" className="input input-bordered w-full" />
+                        </label>
+                    </div>
+                )}
+
 
                 <div className='grid grid-cols-2 gap-2'>
                     <label className="form-control w-full mt-4">

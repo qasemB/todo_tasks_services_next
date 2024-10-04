@@ -15,6 +15,6 @@ export type TasksListItemsType = {
 }
 
 export type CreateTaskReqParamsType = Omit<CreateTaskParamsType, "startedAt" | "endedAt"> & {
-    startedAt?: Date;
-    endedAt?: Date;
+    startedAt?: any;
+    endedAt?: any;
 }

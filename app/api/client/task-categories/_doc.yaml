@@ -64,6 +64,19 @@ paths:
         - Client/TaskCategories
       summary: Retrieve a list of task categories include its tasks
       description: This endpoint retrieves a list of all task categories of current user include its tasks.
+      parameters:
+      - name: startFrom
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: از چند روز قبل شروع بشه.
+      - name: endAt
+        in: query
+        required: true
+        schema:
+          type: integer
+        description: تا چند روز بعد ادامه پیدا کنه.
       responses:
         "200":
           description: A list of task categories include its tasks

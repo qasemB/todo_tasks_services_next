@@ -60,16 +60,15 @@ const TaskListPage = () => {
 
     const handleAddTask = (date: string, taskCatId: string) => {
         const d = new Date(date)
-        setValue("startedAt", d)
-        setValue("endedAt", d)
+        const dd = d.toISOString().split("T")[0]
+        setValue("startedAt", dd)
+        setValue("endedAt", dd)
         setValue("taskCategoryId", taskCatId)
         // setCreateTaskParams(old => ({ ...old, startedAt: d, endedAt: d, taskCategoryId: taskCatId }))
         dialogRef.current?.showModal()
     }
 
-    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {
-        console.log(values);
-        
+    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {        
         const res = await httpService("/client/tasks", "post", values)
         if (res.status === 200 || res.status === 201) {
             handleGetTaskCats()
