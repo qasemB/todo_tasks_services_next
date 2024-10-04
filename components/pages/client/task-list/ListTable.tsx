@@ -21,14 +21,11 @@ const getDayOfWeek = (date: string) => {
 }
 
 const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleChangeTaskIsDone, handleDeleteTask }: ListTableType) => {
-    const [dates, setDates] = useState<string[]>([])
-
-    console.log(taskCats);
-    
+    const [dates, setDates] = useState<string[]>([])    
 
     const handleDatesInRange = () => {
         const range = GLOBAL_CONST.task_list_date_range
-        const datesArr = getDatesInRange(-3, range.end)
+        const datesArr = getDatesInRange(range.start, range.end)
         setDates(datesArr)
     }
 

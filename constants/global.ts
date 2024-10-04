@@ -4,6 +4,6 @@ export const GLOBAL_CONST = {
     per_page: 10,
     task_list_date_range:{
         start: -1,
-        end: 5
+        end: 6
     }
 }

@@ -15,13 +15,43 @@ export async function POST(request: Request) {
 
     const data: CreateTaskParamsType = await request.json();
 
+    let datas: CreateTaskParamsType[] = [data]
+
+    if (data.repetitionItems) datas = getTaskInDates(data)
+
     const validationErrors = validateParamsErrors(createTaskValidationSchema, data)
     if (validationErrors) return validationErrors;
 
     try {
-        const taskCategory = await prisma.task.create({ data });
+        const taskCategory = await prisma.task.createMany({ data: datas },);
         return new ResponseClass(taskCategory, true).created();
     } catch (error) {
         return new ResponseClass(null, false, 'Error creating data').custom(500);
     }
+}
+
+
+const getTaskInDates = (task: CreateTaskParamsType): CreateTaskParamsType[] => {
+    const newTasks: CreateTaskParamsType[] = []
+    if (task.repetitionItems && task.repetitionType) {
+        newTasks.push(task)
+        let additionDate = 0
+        for (let index = 1; index <= task.repetitionItems; index++) {
+            additionDate = additionDate + (task.repetitionType + 1)
+            const startedAt = addDaysToDate(task.startedAt!, additionDate)
+            newTasks.push({
+                ...task,
+                startedAt,
+            })
+        }
+    } else {
+        newTasks.push(task)
+    }
+    return newTasks
+}
+
+function addDaysToDate(dateString: string, days: number): string {
+    const date = new Date(dateString); // تبدیل رشته ورودی به تاریخ
+    date.setUTCDate(date.getUTCDate() + days); // اضافه کردن روز به تاریخ به صورت UTC
+    return date.toISOString(); // برگرداندن تاریخ به فرمت ISO
 }
