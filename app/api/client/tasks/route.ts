@@ -30,7 +30,6 @@ export async function POST(request: Request) {
     }
 }
 
-
 export async function GET(request: Request) {
     const verified = verifyToken(request)
     if (!verified) return new NextResponse('Unauthorized', { status: 401 });
