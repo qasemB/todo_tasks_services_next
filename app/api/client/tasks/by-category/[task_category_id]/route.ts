@@ -7,9 +7,7 @@ type ParamsType = { params: { task_category_id: string; } }
 export async function GET(request: Request, { params }: ParamsType) {
     const verified = verifyToken(request)
     if (!verified) return new NextResponse('Unauthorized', { status: 401 });
-
     const { task_category_id } = params
-
     try {
         const tasks = await prisma.task.findMany({
             where: { taskCategoryId: task_category_id },

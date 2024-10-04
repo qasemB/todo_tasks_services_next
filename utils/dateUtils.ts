@@ -1,4 +1,5 @@
 import moment from "jalali-moment";
+moment.locale("fa-IR")
 
 export type FormatType = 'dddd، jD jMMMM jYYYY' | 'jD jMMMM jYYYY' | 'jMM/jDD' | 'jDD/jMM/jYYYY'
 

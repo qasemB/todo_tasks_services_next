@@ -1,9 +1,7 @@
+import Dashboard from "@/components/pages/client/dashboard/Dashboard";
+
 const page = () => {
-    return (
-        <div>
-            dashboard...
-        </div>
-    );
+    return <Dashboard/>;
 };
 
 export default page;

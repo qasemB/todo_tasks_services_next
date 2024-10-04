@@ -31,6 +31,33 @@ export async function POST(request: Request) {
 }
 
 
+export async function GET(request: Request) {
+    const verified = verifyToken(request)
+    if (!verified) return new NextResponse('Unauthorized', { status: 401 });
+
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 59, 59, 999);
+
+    try {
+        const tasks = await prisma.task.findMany({
+            where: {
+                startedAt: {
+                    gte: startOfDay,
+                    lte: endOfDay
+                }
+            },
+            include: { taskCategory: true }
+        });
+        return new ResponseClass(tasks, true).success();
+    } catch (error) {
+        return new ResponseClass(null, false, 'Error fetching data').custom(500);
+    }
+}
+
+
 const getTaskInDates = (task: CreateTaskParamsType): CreateTaskParamsType[] => {
     const newTasks: CreateTaskParamsType[] = []
     if (task.repetitionItems && task.repetitionType) {

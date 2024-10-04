@@ -12,6 +12,7 @@ export type TasksListItemsType = {
     startedAt: string
     taskCategoryId: string
     title: string
+    taskCategory: {title: string}
 }
 
 export type CreateTaskReqParamsType = Omit<CreateTaskParamsType, "startedAt" | "endedAt"> & {
