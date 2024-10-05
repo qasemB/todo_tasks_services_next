@@ -59,11 +59,11 @@ export async function GET(request: Request) {
 
 const getTaskInDates = (task: CreateTaskParamsType): CreateTaskParamsType[] => {
     const newTasks: CreateTaskParamsType[] = []
-    if (task.repetitionItems && task.repetitionType) {
+    if (task.repetitionItems ) {
         newTasks.push(task)
         let additionDate = 0
         for (let index = 1; index <= task.repetitionItems; index++) {
-            additionDate = additionDate + (task.repetitionType + 1)
+            additionDate = additionDate + (task.repetitionType! + 1)
             const startedAt = addDaysToDate(task.startedAt!, additionDate)
             newTasks.push({
                 ...task,
