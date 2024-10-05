@@ -8,7 +8,7 @@ import { IoCloseCircle } from 'react-icons/io5';
 type ListTableType = {
     taskCats: TaskCategoryListItemsType[]
     handleDeleteTaskCategory: (taskCatId: string) => Promise<false | undefined>
-    handleAddTask: (date: string, taskCatId: string) => void
+    handleAddTask: (date: string, taskCat: TaskCategoryListItemsType) => void
     handleChangeTaskIsDone: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, task: TasksListItemsType) => Promise<void>
     handleDeleteTask: (e: React.MouseEvent<SVGElement, MouseEvent>, taskId: string) => Promise<false | undefined>
 }
@@ -21,7 +21,7 @@ const getDayOfWeek = (date: string) => {
 }
 
 const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleChangeTaskIsDone, handleDeleteTask }: ListTableType) => {
-    const [dates, setDates] = useState<string[]>([])    
+    const [dates, setDates] = useState<string[]>([])
 
     const handleDatesInRange = () => {
         const range = GLOBAL_CONST.task_list_date_range
@@ -55,7 +55,11 @@ const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleCh
                             <th>{convertMiladi2Jalali(date, "jMM/jDD")}</th>
                             <th>{getDayOfWeek(date)}</th>
                             {taskCats.map(taskCat => (
-                                <td key={"_intasks_" + taskCat.id} className="cursor-pointer hover:ring-2" onClick={() => handleAddTask(date, taskCat.id)}>
+                                <td
+                                    key={"_intasks_" + taskCat.id}
+                                    className="cursor-pointer hover:ring-2"
+                                    onClick={() => handleAddTask(date, taskCat)}
+                                >
                                     {taskCat.Task.filter(task => convertMiladi2Jalali(task.startedAt?.toString()) === convertMiladi2Jalali(date))?.map((t) => (
                                         <div
                                             key={t.id}

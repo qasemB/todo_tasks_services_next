@@ -1,4 +1,5 @@
 import { CreateTaskReqParamsType } from '@/types/task';
+import { TaskCategoryListItemsType } from '@/types/taskCategory';
 import React, { RefObject } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -6,9 +7,10 @@ type AddTaskModalType = {
     dialogRef: RefObject<HTMLDialogElement>
     handleConfirmCreateTask: (values: CreateTaskReqParamsType) => Promise<void>
     formReturn: UseFormReturn<CreateTaskReqParamsType, any, undefined>
+    selectedTaskCat: TaskCategoryListItemsType | undefined
 }
 
-const AddTaskModal = ({ dialogRef, handleConfirmCreateTask, formReturn }: AddTaskModalType) => {
+const AddTaskModal = ({ dialogRef, handleConfirmCreateTask, formReturn, selectedTaskCat }: AddTaskModalType) => {
 
     const { handleSubmit, register, getValues, watch } = formReturn
 
@@ -18,6 +20,7 @@ const AddTaskModal = ({ dialogRef, handleConfirmCreateTask, formReturn }: AddTas
         <dialog className="bg-[#000000ab]  w-full lg:w-1/3" ref={dialogRef}>
             <div className="bg-white rounded-lg shadow-md p-5">
                 <h3 className="font-bold text-lg">افزودن تسک</h3>
+                <h2 className="font-bold text-gray-400">{selectedTaskCat?.title}</h2>
                 <label className="form-control w-full mt-4">
                     <div className="label">
                         <span className="label-text">عنوان تسک </span>

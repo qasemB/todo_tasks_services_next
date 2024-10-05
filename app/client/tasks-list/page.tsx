@@ -22,6 +22,7 @@ export const dynamic = 'force-dynamic'
 
 const TaskListPage = () => {
     const [taskCats, setTaskCats] = useState<TaskCategoryListItemsType[]>([])
+    const [selectedTaskCat, setSelectedTaskCat] = useState<TaskCategoryListItemsType>()
     const [loading, setLoading] = useState<boolean>(false)
     const [fetching, setFetching] = useState<boolean>(false)
     // const [createTaskParams, setCreateTaskParams] = useState<CreateTaskReqParamsType>({ title: "", taskCategoryId: "" })
@@ -58,12 +59,13 @@ const TaskListPage = () => {
         if (res.status === 200) handleGetTaskCats()
     }
 
-    const handleAddTask = (date: string, taskCatId: string) => {
+    const handleAddTask = (date: string, taskCat: TaskCategoryListItemsType) => {
         const d = new Date(date)
         const dd = d.toISOString().split("T")[0]
         setValue("startedAt", dd)
         setValue("endedAt", dd)
-        setValue("taskCategoryId", taskCatId)
+        setValue("taskCategoryId", taskCat.id)
+        setSelectedTaskCat(taskCat)
         // setCreateTaskParams(old => ({ ...old, startedAt: d, endedAt: d, taskCategoryId: taskCatId }))
         dialogRef.current?.showModal()
     }
@@ -136,13 +138,14 @@ const TaskListPage = () => {
                             taskCats={taskCats}
                             handleChangeTaskIsDone={handleChangeTaskIsDone}
                             handleDeleteTask={handleDeleteTask}
-                        />
+                            />
 
                         {/* <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button> */}
                         <AddTaskModal
                             formReturn={formReturn}
                             dialogRef={dialogRef}
                             handleConfirmCreateTask={handleConfirmCreateTask}
+                            selectedTaskCat={selectedTaskCat}
                         />
 
                     </div>
