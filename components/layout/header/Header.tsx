@@ -1,10 +1,13 @@
 'use client'
+import { logout } from "@/actions/auth";
 import DarkmodeBotton from "@/components/DarkmodeBotton";
 import { useShowMenuStore } from "@/zustand/sideMenuStore";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = () => {
     const { toggleShowMenu } = useShowMenuStore(state => state)
+
+    const handleLogout = () => logout(); 
 
     return (
         <div className="dark:bg-gray-700 fixed h-app_header_h w-full shadow">
@@ -20,7 +23,10 @@ const Header = () => {
                     {/* <NotificationBell />
             <AccountAvatar /> */}
                     <span>خوش آمدید</span>
-                    <span>کاربری</span>
+                    {/* <form action={logout}>
+                        <button className="cursor-pointer" type="submit">خروج</button>
+                    </form> */}
+                    <button className="cursor-pointer" onClick={handleLogout} >خروج</button>
                 </div>
             </div>
         </div>

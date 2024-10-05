@@ -15,7 +15,7 @@ export const successAlertModal = (text: string = "", title: string = "عملیا
     backdrop: true,
   });
 };
-export const errorAlertModal = (text: string = "", title: string = "عملیات موفق", icon: AlertIconType = "info") => {
+export const errorAlertModal = (text: string = "", title: string = "عملیات نا موفق", icon: AlertIconType = "info") => {
   return Swal.fire({
     // position,
     icon,

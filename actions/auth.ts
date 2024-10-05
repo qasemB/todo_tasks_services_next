@@ -5,6 +5,7 @@ import { GLOBAL_CONST } from "@/constants/global";
 import { generateToken, hashPassword, verifyPassword } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type FormState = {
     errors?: {
@@ -65,4 +66,9 @@ export async function login(state: FormState, formData: FormData) {
     } catch (error) {
         return { success: false, message: "عملیات ورود با خطا مواجه شد" }
     }
+}
+
+export const logout = async ()=>{
+    cookies().delete(GLOBAL_CONST.login_token_name)
+    redirect("/auth/login")
 }

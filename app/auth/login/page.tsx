@@ -1,10 +1,11 @@
 'use client'
 import { login } from '@/actions/auth';
 import ServerSubmitButton from '@/components/ServerSubmitButton';
+import { useDidUpdateEffect } from '@/hooks/reactCustomHooks';
+import { errorAlertModal, successAlertModal } from '@/utils/alerts';
 // import {  successToast } from '@/utils/alerts';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { FiUser } from 'react-icons/fi';
 import { LiaUserCheckSolid } from 'react-icons/lia';
@@ -15,16 +16,16 @@ const LoginPage = () => {
     const [state, action] = useFormState(login, undefined)
     const router = useRouter()
 
-    useEffect(() => {
+    useDidUpdateEffect(() => {        
         if (state?.success) {
-            // successToast(state.message)
+            successAlertModal(state.message)
             router.push("/client/dashboard")
-        }else{
-            // errorToast(state?.message)
+        }else if (state){
+            errorAlertModal(state?.message, "", "error")
         }
     }, [state, router])
     return (
-        <div className=' h-screen grid grid-cols-1 lg:grid-cols-3 '>
+        <div className=' h-screen grid grid-cols-1 lg:grid-cols-3 dark:text-gray-500'>
             <div className='lg:col-span-2 bg-white flex justify-center items-center'>
                 <div className="grid grid-cols-1 lg:grid-cols-4 w-full">
                     <div className="lg:col-span-2 lg:col-start-2 px-4 xl:px-8">

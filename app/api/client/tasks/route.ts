@@ -40,12 +40,18 @@ export async function GET(request: Request) {
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);
 
+    const decodecToken = getDecodedToken(request)
+    if (!decodecToken?.id) return new ResponseClass(null, false).unAuth()
+
     try {
         const tasks = await prisma.task.findMany({
             where: {
                 startedAt: {
                     gte: startOfDay,
                     lte: endOfDay
+                },
+                taskCategory: {
+                    userId: decodecToken.id
                 }
             },
             include: { taskCategory: true }
