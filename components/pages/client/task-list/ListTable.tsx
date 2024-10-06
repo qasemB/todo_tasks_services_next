@@ -3,6 +3,7 @@ import { TasksListItemsType } from '@/types/task';
 import { TaskCategoryListItemsType } from '@/types/taskCategory';
 import { convertMiladi2Jalali, getDatesInRange } from '@/utils/dateUtils';
 import React, { useEffect, useState } from 'react';
+import { IoIosRepeat } from 'react-icons/io';
 import { IoCloseCircle } from 'react-icons/io5';
 
 type ListTableType = {
@@ -10,7 +11,7 @@ type ListTableType = {
     handleDeleteTaskCategory: (taskCatId: string) => Promise<false | undefined>
     handleAddTask: (date: string, taskCat: TaskCategoryListItemsType) => void
     handleChangeTaskIsDone: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, task: TasksListItemsType) => Promise<void>
-    handleDeleteTask: (e: React.MouseEvent<SVGElement, MouseEvent>, taskId: string) => Promise<false | undefined>
+    handleDeleteTask: (e: React.MouseEvent<SVGElement, MouseEvent>, task: TasksListItemsType) => Promise<false | undefined>
 }
 
 const daysOfWeek = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
@@ -60,7 +61,7 @@ const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleCh
                                     className="cursor-pointer hover:ring-2"
                                     onClick={() => handleAddTask(date, taskCat)}
                                 >
-                                    {taskCat.Task.filter(task => convertMiladi2Jalali(task.startedAt?.toString()) === convertMiladi2Jalali(date))?.map((t) => (
+                                    {taskCat.Task.filter(task => convertMiladi2Jalali(task.startedAt?.toString()) === convertMiladi2Jalali(date))?.map((t: TasksListItemsType) => (
                                         <div
                                             key={t.id}
                                             className={`relative group rounded-lg border dark:border-gray-300 border-gray-600 py-1 px-2 mb-1 ${t.isDone && "bg-green-400 text-indigo-600"}`}
@@ -68,8 +69,11 @@ const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleCh
                                         >
                                             {t.title}
                                             <IoCloseCircle className="text-red-400 absolute -top-2 m-auto cursor-pointer size-5 opacity-0 group-hover:opacity-100 transition-all"
-                                                onClick={(e) => handleDeleteTask(e, t.id)}
+                                                onClick={(e) => handleDeleteTask(e, t)}
                                             />
+                                            {t.repetitionItems ? (
+                                                <IoIosRepeat className='text-gray-500 dark:text-gray-300 absolute top-0 left-1' />
+                                            ) : null}
                                         </div>
                                     ))}
                                 </td>

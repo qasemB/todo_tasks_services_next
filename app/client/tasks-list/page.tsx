@@ -31,10 +31,10 @@ const TaskListPage = () => {
     const createTaskCatDialogRef = useRef<HTMLDialogElement>(null)
 
     const formReturn = useForm<CreateTaskReqParamsType>({
-        defaultValues:{
-            description:"",
-            repetitionItems:0,
-            repetitionType:0
+        defaultValues: {
+            description: "",
+            repetitionItems: 0,
+            repetitionType: 0
         }
     })
     const { setValue } = formReturn
@@ -70,7 +70,7 @@ const TaskListPage = () => {
         dialogRef.current?.showModal()
     }
 
-    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {        
+    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {
         const res = await httpService("/client/tasks", "post", values)
         if (res.status === 200 || res.status === 201) {
             handleGetTaskCats()
@@ -97,11 +97,21 @@ const TaskListPage = () => {
         if (res.status === 200 || res.status === 201) handleGetTaskCats()
     }
 
-    const handleDeleteTask = async (e: React.MouseEvent<SVGElement, MouseEvent>, taskId: string) => {
+    const handleDeleteTask = async (e: React.MouseEvent<SVGElement, MouseEvent>, task: TasksListItemsType) => {
         e.stopPropagation()
         const confirm = await confirmAlert("", "آیا اطمینان دارید؟")
         if (!confirm.isConfirmed) return false
-        const res = await httpService(`/client/tasks/${taskId}`, "delete")
+
+        let deleteAll = false
+        if (task.groupCode) {
+            const confirmDeleteAll = await confirmAlert("حذف دسته جمعی", "آیا همه ی این تسک ها حذف شوند؟")
+            if (confirmDeleteAll.isConfirmed) deleteAll = true
+        }
+
+        const res = (task.groupCode && deleteAll)
+            ? await httpService(`/client/tasks/${task.groupCode}`, "delete")
+            : await httpService(`/client/tasks/${task.id}`, "delete")
+            
         if (res.status === 200) handleGetTaskCats()
     }
 
@@ -138,7 +148,7 @@ const TaskListPage = () => {
                             taskCats={taskCats}
                             handleChangeTaskIsDone={handleChangeTaskIsDone}
                             handleDeleteTask={handleDeleteTask}
-                            />
+                        />
 
                         {/* <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button> */}
                         <AddTaskModal

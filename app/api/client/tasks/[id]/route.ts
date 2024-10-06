@@ -80,7 +80,14 @@ export async function DELETE(request: Request, { params }: ParamsType) {
 
 
   try {
-    await prisma.task.delete({ where: { id } });
+    await prisma.task.deleteMany({
+      where: {
+        OR: [
+          { id },
+          { groupCode: id }
+        ]
+      }
+    });
     return new ResponseClass(null, true).success()
   } catch (error) {
     return new ResponseClass().serverError();

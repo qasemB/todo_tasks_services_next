@@ -5,6 +5,7 @@ import httpService from "@/lib/httpService";
 import { TasksListItemsType } from "@/types/task";
 import { convertMiladi2Jalali } from "@/utils/dateUtils";
 import { useEffect, useState } from "react";
+import { IoIosRepeat } from "react-icons/io";
 
 const Dashboard = () => {
 
@@ -39,11 +40,14 @@ const Dashboard = () => {
                 <h2 className="">لیست تسک های امروز</h2>
                 <h4 className="mb-4 text-gray-400">{today}</h4>
                 {todayTasks.map(task => (
-                    <div key={task.id} className={`rounded-md border border-gray-500 dark:border-gray-300 p-2 mb-2 text-center cursor-pointer ${task.isDone && "bg-green-400"}`}
+                    <div key={task.id} className={`relative rounded-md border border-gray-500 dark:border-gray-300 p-2 mb-2 text-center cursor-pointer ${task.isDone && "bg-green-400"}`}
                         onClick={() => handleChangeTaskIsDone(task)}
                     >
                         <span className="text-gray-400">{task.taskCategory.title} : </span>
                         {task.isDone ? (<del> {task.title}</del>) : (<span> {task.title}</span>)}
+                        {task.repetitionItems ? (
+                            <IoIosRepeat className='text-gray-500 dark:text-gray-300 absolute top-0 left-1' />
+                        ) : null}
                     </div>
                 ))}
             </div>

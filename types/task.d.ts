@@ -3,6 +3,7 @@ import { CreateTaskParamsType } from "@/app/api/client/tasks/_types"
 export type TasksListItemsType = {
     createdAt: string
     description: string
+    groupCode: string
     endedAt: string
     id: string
     includeVacation: boolean

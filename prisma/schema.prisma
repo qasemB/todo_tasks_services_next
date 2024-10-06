@@ -48,6 +48,7 @@ model TaskCategory {
 
 model Task {
   id              String    @id @default(cuid()) @map("_id")
+  groupCode       String?    
   title           String
   description     String? // nullable field
   isDone          Boolean   @default(false)
