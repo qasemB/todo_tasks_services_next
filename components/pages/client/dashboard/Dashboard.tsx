@@ -2,13 +2,17 @@
 
 import DashboardSkeleton from "@/components/skeleton/DashboardSkeleton";
 import httpService from "@/lib/httpService";
-import { TasksListItemsType } from "@/types/task";
+import { CreateTaskReqParamsType, TasksListItemsType } from "@/types/task";
 import { convertMiladi2Jalali } from "@/utils/dateUtils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { IoIosRepeat } from "react-icons/io";
+import AddTaskModal from "../task-list/AddTaskModal";
+import { useForm } from "react-hook-form";
 
 const Dashboard = () => {
 
+    const dialogRef = useRef<HTMLDialogElement>(null)
     const [todayTasks, setTodayTasks] = useState<TasksListItemsType[] | undefined>()
 
     const [today, setToday] = useState("")
@@ -32,6 +36,31 @@ const Dashboard = () => {
         setToday(convertMiladi2Jalali(undefined, "dddd، jD jMMMM jYYYY"))
     }, [])
 
+    const formReturn = useForm<CreateTaskReqParamsType>({
+        defaultValues: {
+            description: "",
+            repetitionItems: 0,
+            repetitionType: 0,
+        }
+    })
+    const { setValue } = formReturn
+
+
+    useEffect(() => {
+        const d = new Date()
+        const dd = d.toISOString().split("T")[0]
+        setValue("startedAt", dd)
+        setValue("endedAt", dd)
+    }, [setValue])
+
+    const handleConfirmCreateTask = async (values: CreateTaskReqParamsType) => {
+        const res = await httpService("/client/tasks", "post", values)
+        if (res.status === 200 || res.status === 201) {
+            getTodayTasksService()
+            dialogRef.current?.close()
+        }
+    }
+
     return !todayTasks ? (
         <DashboardSkeleton />
     ) : (
@@ -50,7 +79,22 @@ const Dashboard = () => {
                         ) : null}
                     </div>
                 ))}
+
             </div>
+            <div className="absolute bottom-2 h-14 flex items-center w-full lg:w-1/3 px-2 m-auto left-0 right-0">
+                <button className="w-full border bg-transparent text-gray-600 border-gray-500 dark:border-gray-300  dark:text-white rounded-full py-2 flex justify-center items-center"
+                onClick={()=>dialogRef.current?.showModal()}
+                >
+                    افزودن تسک جدید
+                    <FaPlus className="mr-2" />
+                </button>
+            </div>
+
+            <AddTaskModal
+                formReturn={formReturn}
+                dialogRef={dialogRef}
+                handleConfirmCreateTask={handleConfirmCreateTask}
+            />
         </div>
     );
 };

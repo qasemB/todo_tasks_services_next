@@ -40,7 +40,7 @@ const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleCh
                     <th>تاریخ</th>
                     <th>روز</th>
                     {taskCats.map(taskCat => (
-                        <th key={taskCat.id} className="relative group min-w-32">
+                        <th key={taskCat.id} className="relative group min-w-44">
                             {taskCat?.title}
                             <IoCloseCircle className="text-red-400 absolute -top-2 m-auto cursor-pointer size-5 opacity-0 group-hover:opacity-100 transition-all"
                                 onClick={() => handleDeleteTaskCategory(taskCat.id)}
@@ -64,8 +64,9 @@ const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleCh
                                     {taskCat.Task.filter(task => convertMiladi2Jalali(task.startedAt?.toString()) === convertMiladi2Jalali(date))?.map((t: TasksListItemsType) => (
                                         <div
                                             key={t.id}
-                                            className={`relative group rounded-lg border dark:border-gray-300 border-gray-600 py-1 px-2 mb-1 ${t.isDone && "bg-green-400 text-indigo-600"}`}
+                                            className={`relative w-full group tooltip  rounded-lg border dark:border-gray-300 border-gray-600 py-1 px-2 mb-1 ${t.isDone && "bg-green-400 text-indigo-600"}`}
                                             onClick={e => handleChangeTaskIsDone(e, t)}
+                                            data-tip={t.description || undefined}
                                         >
                                             {t.title}
                                             <IoCloseCircle className="text-red-400 absolute -top-2 m-auto cursor-pointer size-5 opacity-0 group-hover:opacity-100 transition-all"
