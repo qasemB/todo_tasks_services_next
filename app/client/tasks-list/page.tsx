@@ -34,10 +34,13 @@ const TaskListPage = () => {
         defaultValues: {
             description: "",
             repetitionItems: 0,
-            repetitionType: 0
+            repetitionType: 0,
+            title: "",
+            endedAt: new Date(),
+            startedAt: new Date(),
         }
     })
-    const { setValue } = formReturn
+    const { setValue, reset } = formReturn
 
     const handleLoading = (status: boolean) => {
         if (!taskCats.length) setLoading(status)
@@ -75,6 +78,7 @@ const TaskListPage = () => {
         if (res.status === 200 || res.status === 201) {
             handleGetTaskCats()
             dialogRef.current?.close()
+            reset()
         }
     }
 

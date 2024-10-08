@@ -5,7 +5,7 @@ import { headers } from 'next/headers';
 const SECRET_KEY = process.env.JWT_SECRET || 'your_secret_key';
 
 export const generateToken = (userId: string, role: string) => {
-    return jwt.sign({ id: userId, role }, SECRET_KEY, { expiresIn: '24h' });
+    return jwt.sign({ id: userId, role }, SECRET_KEY, { expiresIn: '240h' });
 };
 
 export const hashPassword = async (password: string) => {

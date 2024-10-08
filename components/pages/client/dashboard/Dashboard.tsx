@@ -41,9 +41,12 @@ const Dashboard = () => {
             description: "",
             repetitionItems: 0,
             repetitionType: 0,
+            title: "",
+            endedAt: new Date(),
+            startedAt: new Date(),
         }
     })
-    const { setValue } = formReturn
+    const { setValue, reset } = formReturn
 
 
     useEffect(() => {
@@ -58,6 +61,7 @@ const Dashboard = () => {
         if (res.status === 200 || res.status === 201) {
             getTodayTasksService()
             dialogRef.current?.close()
+            reset()
         }
     }
 
@@ -83,7 +87,7 @@ const Dashboard = () => {
             </div>
             <div className="absolute bottom-2 h-14 flex items-center w-full lg:w-1/3 px-2 m-auto left-0 right-0">
                 <button className="w-full border bg-transparent text-gray-600 border-gray-500 dark:border-gray-300  dark:text-white rounded-full py-2 flex justify-center items-center"
-                onClick={()=>dialogRef.current?.showModal()}
+                    onClick={() => dialogRef.current?.showModal()}
                 >
                     افزودن تسک جدید
                     <FaPlus className="mr-2" />
