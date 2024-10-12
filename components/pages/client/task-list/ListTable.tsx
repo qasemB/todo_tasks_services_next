@@ -1,4 +1,3 @@
-import { GLOBAL_CONST } from '@/constants/global';
 import { TasksListItemsType } from '@/types/task';
 import { TaskCategoryListItemsType } from '@/types/taskCategory';
 import { convertMiladi2Jalali, getDatesInRange } from '@/utils/dateUtils';
@@ -12,6 +11,7 @@ type ListTableType = {
     handleAddTask: (date: string, taskCat: TaskCategoryListItemsType) => void
     handleChangeTaskIsDone: (e: React.MouseEvent<HTMLDivElement, MouseEvent>, task: TasksListItemsType) => Promise<void>
     handleDeleteTask: (e: React.MouseEvent<SVGElement, MouseEvent>, task: TasksListItemsType) => Promise<false | undefined>
+    dateRange: { start: number; end: number; }
 }
 
 const daysOfWeek = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
@@ -21,18 +21,18 @@ const getDayOfWeek = (date: string) => {
     return daysOfWeek[dayOfWeek]
 }
 
-const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleChangeTaskIsDone, handleDeleteTask }: ListTableType) => {
+const ListTable = ({ taskCats, handleDeleteTaskCategory, handleAddTask, handleChangeTaskIsDone, handleDeleteTask, dateRange }: ListTableType) => {
     const [dates, setDates] = useState<string[]>([])
 
     const handleDatesInRange = () => {
-        const range = GLOBAL_CONST.task_list_date_range
-        const datesArr = getDatesInRange(range.start, range.end)
+        const datesArr = getDatesInRange(dateRange.start, dateRange.end)
         setDates(datesArr)
     }
 
     useEffect(() => {
         handleDatesInRange()
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [taskCats])
     return (
         <table className="table [&>*]:text-center">
             <thead>

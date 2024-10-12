@@ -11,10 +11,12 @@ import { confirmAlert } from "@/utils/alerts";
 // import { successToast } from "@/utils/alerts";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { IoCheckmarkCircleSharp } from "react-icons/io5";
 import { TbCategoryPlus } from "react-icons/tb";
 // import { unstable_cache } from "next/cache";
 
 export const dynamic = 'force-dynamic'
+const range = GLOBAL_CONST.task_list_date_range
 
 // const getTaskCats = unstable_cache(async (id) => {
 //     return 
@@ -23,6 +25,7 @@ export const dynamic = 'force-dynamic'
 const TaskListPage = () => {
     const [taskCats, setTaskCats] = useState<TaskCategoryListItemsType[]>([])
     const [selectedTaskCat, setSelectedTaskCat] = useState<TaskCategoryListItemsType>()
+    const [dateRange, setDateRange] = useState({ start: range.start, end: range.end })
     const [loading, setLoading] = useState<boolean>(false)
     const [fetching, setFetching] = useState<boolean>(false)
     // const [createTaskParams, setCreateTaskParams] = useState<CreateTaskReqParamsType>({ title: "", taskCategoryId: "" })
@@ -48,9 +51,8 @@ const TaskListPage = () => {
     }
 
     const handleGetTaskCats = async () => {
-        const range = GLOBAL_CONST.task_list_date_range
         handleLoading(true)
-        const res = await httpService(`/client/task-categories/include-tasks?startFrom=${range.start}&endAt=${range.end}`, "get")
+        const res = await httpService(`/client/task-categories/include-tasks?startFrom=${dateRange.start}&endAt=${dateRange.end}`, "get")
         handleLoading(false)
         setTaskCats(res.data.data)
     }
@@ -115,7 +117,7 @@ const TaskListPage = () => {
         const res = (task.groupCode && deleteAll)
             ? await httpService(`/client/tasks/${task.groupCode}`, "delete")
             : await httpService(`/client/tasks/${task.id}`, "delete")
-            
+
         if (res.status === 200) handleGetTaskCats()
     }
 
@@ -143,6 +145,31 @@ const TaskListPage = () => {
                     <TbCategoryPlus className="mr-2 size-5" />
                 </span>
             </div>
+            <div className="flex justify-start mb-5 items-center">
+                <span className="flex">
+                    <span className="flex flex-row gap-2">
+                        <span>از</span>
+                        <input
+                            className="input w-16 h-8 bg-transparent border border-gray-400"
+                            type="number"
+                            value={dateRange.start * -1}
+                            onChange={(e) => setDateRange({ ...dateRange, start: parseInt(e.target.value) * -1 })}
+                        />
+                        <span>روز قبل</span>
+                    </span>
+                    <span className="flex flex-row gap-2 mr-4">
+                        <span>تا</span>
+                        <input
+                            className="input w-16 h-8 bg-transparent border border-gray-400"
+                            type="number"
+                            value={dateRange.end}
+                            onChange={(e) => setDateRange({ ...dateRange, end: parseInt(e.target.value) })}
+                        />
+                        <span>روز بعد</span>
+                    </span>
+                    <IoCheckmarkCircleSharp className="text-green-500 mr-4 size-8 cursor-pointer" onClick={handleGetTaskCats} />
+                </span>
+            </div>
             {
                 loading ? (<TableSkeleton />) : taskCats.length ? (
                     <div className={`${fetching && "animate-pulse"}`}>
@@ -152,6 +179,7 @@ const TaskListPage = () => {
                             taskCats={taskCats}
                             handleChangeTaskIsDone={handleChangeTaskIsDone}
                             handleDeleteTask={handleDeleteTask}
+                            dateRange={dateRange}
                         />
 
                         {/* <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}>open modal</button> */}
