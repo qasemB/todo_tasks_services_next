@@ -19,7 +19,6 @@ const Sidebar = () => {
                     <ul className=" ">
                         <SidebarItem href={"dashboard"} label="داشبورد"/>
                         <SidebarItem href={"tasks-list"} label="لیست تسک ها"/>
-                        <SidebarItem href={"add-task"} label="افزودن تسک"/>
                         <SidebarItem href={"calendar"} label="تقویم"/>
                     </ul>
                 </div>

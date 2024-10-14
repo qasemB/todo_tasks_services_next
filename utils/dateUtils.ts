@@ -1,12 +1,12 @@
 import moment from "jalali-moment";
-moment.locale("fa-IR")
+moment.locale("fa-IR");
 
-export type FormatType = 'dddd، jD jMMMM jYYYY' | 'jD jMMMM jYYYY' | 'jMM/jDD' | 'jDD/jMM/jYYYY'
+export type FormatType = 'dddd، jD jMMMM jYYYY' | 'jD jMMMM jYYYY' | 'jMM/jDD' | 'jDD/jMM/jYYYY';
 
 export const convertMiladi2Jalali = (date?: string | undefined, format: FormatType = 'jD jMMMM jYYYY') => {
-    const newDate = moment(date)
-    return newDate.format(format)
-}
+    const newDate = moment(date ? new Date(date).toISOString() : undefined); // تبدیل به فرمت ISO
+    return newDate.format(format);
+};
 
 export const getDatesInRange = (startOffset: number, endOffset: number): string[] => {
     const today = new Date();
@@ -15,25 +15,24 @@ export const getDatesInRange = (startOffset: number, endOffset: number): string[
     for (let i = startOffset; i <= endOffset; i++) {
         const currentDate = new Date(today);
         currentDate.setDate(today.getDate() + i);
-        dates.push(currentDate.toISOString().split('T')[0]);
+        dates.push(currentDate.toISOString().split('T')[0]); // اطمینان از فرمت ISO
     }
 
     return dates;
 };
 
-
-
 export interface CalendarDay {
     dateJalali: string; // تاریخ شمسی
     dateGregorian: string; // تاریخ میلادی
-    dayOfWeek: string; // نام روز هفته,
-    dayOfWeekIndx: number; // نام روز هفته,
-    day: number,    
-    monthName: string
+    dayOfWeek: string; // نام روز هفته
+    dayOfWeekIndx: number; // نام روز هفته
+    day: number;    
+    monthName: string;
 }
+
 export function getJalaliMonthDays(date?: string): CalendarDay[] {
     // اگر تاریخ ورودی وجود نداشت، تاریخ امروز را استفاده کنید
-    const today = date ? moment(date) : moment();
+    const today = date ? moment(new Date(date).toISOString()) : moment();
 
     // دریافت اولین و آخرین روز ماه شمسی
     const firstDayOfMonth = today.clone().startOf('jMonth'); // کلون کردن برای جلوگیری از تغییر تاریخ اصلی

@@ -37,9 +37,9 @@ const Calendar = () => {
             </div>
 
             <div className="w-full flex justify-center items-center mt-10">
-                <span className="border cursor-pointer border-gray-300 rounded-full px-4 py-1" onClick={handlePrevMonth}>ماه قبل</span>
-                <span className="border cursor-pointer border-gray-300 rounded-full px-4 py-1 mx-4" onClick={handleCurrentMonth}>ماه جاری</span>
-                <span className="border cursor-pointer border-gray-300 rounded-full px-4 py-1" onClick={handleNextMonth}>ماه بعد</span>
+                <span className="border cursor-pointer border-gray-300 select-none rounded-full px-4 py-1" onClick={handlePrevMonth}>ماه قبل</span>
+                <span className="border cursor-pointer border-gray-300 select-none rounded-full px-4 py-1 mx-4" onClick={handleCurrentMonth}>ماه جاری</span>
+                <span className="border cursor-pointer border-gray-300 select-none rounded-full px-4 py-1" onClick={handleNextMonth}>ماه بعد</span>
             </div>
         </div>
     );
