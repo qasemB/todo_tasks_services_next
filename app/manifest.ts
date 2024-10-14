@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
         name: 'My Todo',
         short_name: 'My Todo',
         description: 'todo app',
-        start_url: '/',
+        start_url: '/auth/login',
         display: 'standalone',
         background_color: '#fff',
         theme_color: '#fff',
