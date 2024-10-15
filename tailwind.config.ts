@@ -6,7 +6,7 @@ const config: Config = {
       {
         mytheme: {
           "primary": "#ff00ff",
-          "secondary": "#ff00ff",
+          "secondary": "#24292e",
           "accent": "#00ffff",
           "neutral": "#ff00ff",
           "base-100": "#ffffff",

@@ -99,6 +99,28 @@ paths:
       responses:
         "200":
           description: A list of tasks
+  /api/client/tasks/in-range:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Client/Tasks
+      summary: Retrieve a list of tasks
+      description: This endpoint retrieves a list of all tasks.
+      parameters:
+        - name: startFrom
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: endAt
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of tasks
   /api/client/tasks/{id}:
     get:
       security:
