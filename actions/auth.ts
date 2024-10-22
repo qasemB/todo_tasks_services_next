@@ -59,7 +59,9 @@ export async function login(state: FormState, formData: FormData) {
            return { message: "کاربر یافت نشد", success: false }
         }
         const token = generateToken(user.id, user.role);
-        cookies().set(GLOBAL_CONST.login_token_name, token)
+        cookies().set(GLOBAL_CONST.login_token_name, token, {
+            maxAge: 60 * 60 * 24 * 120
+        })
 
         return { message: "ورود با موفقیت انجام شد", success: true }
         
