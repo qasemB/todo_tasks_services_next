@@ -35,6 +35,17 @@ paths:
       responses:
         "200":
           description: Successful login, returns JWT token
+  /api/auth/user-info:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Authentication
+      summary: Retrieve the logged in user info
+      description: Fetch a user from the database using their ID.
+      responses:
+        "200":
+          description: The user information.
   /api/auth/register:
     post:
       summary: User registration
