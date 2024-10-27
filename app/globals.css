@@ -12,6 +12,14 @@
     font-size: 0.95rem;
 }
 
-.swagger_container *{
+.swagger_container * {
     font-family: Arial, Helvetica, sans-serif !important;
+}
+
+@layer base {
+
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+    }
 }

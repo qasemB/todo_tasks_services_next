@@ -36,7 +36,7 @@ export async function GET(request: Request) {
                             },
                             {
                                 repetitionItems: { gt: 0 },
-                                endedAt: { gte: new Date(datesArr[0]) },
+                                // endedAt: { gte: new Date(datesArr[0]) },
                             }
                         ]
                     }

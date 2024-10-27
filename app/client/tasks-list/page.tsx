@@ -147,20 +147,20 @@ const TaskListPage = () => {
             </div>
             <div className="flex justify-start mb-5 items-center">
                 <span className="flex">
-                    <span className="flex flex-row gap-2">
+                    <span className="flex flex-row gap-2 items-center">
                         <span>از</span>
                         <input
-                            className="input w-16 h-8 bg-transparent border border-gray-400"
+                            className="input w-16 h-8 bg-transparent text-center"
                             type="number"
                             value={dateRange.start * -1}
                             onChange={(e) => setDateRange({ ...dateRange, start: parseInt(e.target.value) * -1 })}
                         />
                         <span>روز قبل</span>
                     </span>
-                    <span className="flex flex-row gap-2 mr-4">
+                    <span className="flex flex-row gap-2 mr-4 items-center">
                         <span>تا</span>
                         <input
-                            className="input w-16 h-8 bg-transparent border border-gray-400"
+                            className="input w-16 h-8 bg-transparent text-center"
                             type="number"
                             value={dateRange.end}
                             onChange={(e) => setDateRange({ ...dateRange, end: parseInt(e.target.value) })}

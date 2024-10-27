@@ -31,10 +31,22 @@ const Calendar = () => {
     }, [days])
 
     const handleCpmpareTodatByDate = (day: CalendarDay) => {
+
         const today = new Date().toISOString().split("T")[0]
-        const selectedDate = new Date(day.dateGregorian).toISOString().split("T")[0]
+        const selectedDate = day.dateGregorian.replaceAll("/", "-")
+        // if (selectedDate == today) {
+        //     console.log();
+
+        //     console.log(day);
+
+        //     console.log(day.dateGregorian);
+        //     console.log(today);
+        // }
         return today == selectedDate
     }
+
+    // console.log(weeks);
+
 
     const weeksIncludeData: (ICalendarDayIncludeData | undefined)[][] = useMemo(() => {
         const newWeeks: (ICalendarDayIncludeData | undefined)[][] = []
@@ -43,9 +55,10 @@ const Calendar = () => {
             for (const day of week) {
                 if (day) {
                     const newDay: ICalendarDayIncludeData = {
-                        ...day, tasks: tasks.filter(q => {
+                        ...day,
+                        tasks: tasks.filter(q => {
                             const taskDate = new Date(q.startedAt).toISOString().split("T")[0]
-                            const dayDate = new Date(day.dateGregorian).toISOString().split("T")[0]
+                            const dayDate = day.dateGregorian.replaceAll("/", "-")
                             return taskDate === dayDate
                         })
                     }

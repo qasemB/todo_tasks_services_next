@@ -72,10 +72,12 @@ const getTaskInDates = (task: CreateTaskParamsType): CreateTaskParamsType[] => {
         for (let index = 1; index <= task.repetitionItems; index++) {
             additionDate = additionDate + (task.repetitionType! + 1)
             const startedAt = addDaysToDate(task.startedAt!, additionDate)
+            const endedAt = addDaysToDate(task.startedAt!, additionDate)
             newTasks.push({
                 ...task,
                 groupCode,
                 startedAt,
+                endedAt, 
             })
         }
     } else {
